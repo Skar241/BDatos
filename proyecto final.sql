@@ -260,6 +260,35 @@ BEGIN
 	END IF;
 END;
 /
+--////////////// PRocedimiento tiene errores  
+ -- sobre tabla cliente
+--procedimiento que inserta tupla en cliente si esta no existe
+
+ CREATE OR REPLACE PROCEDURE  insertaCliente(
+ 	v_noCliente IN  cliente.noCliente%TYPE,
+ 	v_telCli IN cliente.telCli%TYPE,
+ 	v_pilaC IN cliente.pilaC%TYPE,
+ 	v_apPatCli IN cliente.apPatCli%TYPE,
+ 	v_apMatCli IN cliente.apMatCli%TYPE)
+
+ AS 
+ 	d_noCliente cliente.noCliente%TYPE;
+ BEGIN --inicia
+ 	SET SERVEROUTPUT ON; --habilita imprimir en pantalla, no se donde va
+ 	SELECT noCliente  
+ 	INTO d_noCliente
+ 	FROM cliente
+ 	WHERE noCliente = v_noCliente; 
+ 	IF SQL%NOTFOUND THEN
+ 		INSERT INTO cliente (noCliente,telCli,pilaC, apPatCli, apMatCli)
+ 		VALUES (v_noCliente,v_telCli,v_pilaC,v_apPatCli,v_apMatCli);
+ 	ELSE
+ 		DBMS_OUTPUT.PUT_LINE('Ya existe cliente '|| d_noCliente);
+ 	END IF;
+ END;
+ /
+ 
+ --------------------------------------------------------------------------------------
 
 /************** TRIGGER************/
 
@@ -271,8 +300,8 @@ DECLARE
 	pfkautoAsiento reserva.noAuto%TYPE;--listo :3
 	pfkautoAsiento2 reserva.noAsiento%TYPE; --referenciamos una FK compuesta
 BEGIN
-	pfkautoAsiento  = :NEW.noAuto;
-	pfkautoAsiento2 = :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
+	pfkautoAsiento  := :NEW.noAuto;-- a ver si funciona poner " := "
+	pfkautoAsiento2 := :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
 	-- solo actualizamos valor del estatusAsiento
 
 	UPDATE  autoAsiento
