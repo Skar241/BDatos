@@ -292,6 +292,9 @@ Disparador creado.
 /* Procedimiento que verifique que al momento de hacer una reservación del cliente-asiento, no exista otra del mismo  **
 **  cliente en esa fecha y hora, puede estar en otra línea de autobuses                                                */
 
+/*  exect addReservacion(pnoFolio, pcosto,phora, pfecha, pnoCliente, pnoAuto, pnoAsiento, pidLinea) 
+Valores como si hicieras un insert en reservación, más la línea de autobuses*/
+
 CREATE OR REPLACE PROCEDURE addReservacion(pnoFolio IN NUMBER, pcosto IN NUMBER,
 	phora in VARCHAR2, pfecha in DATE, pnoCliente IN NUMBER, pnoAuto IN NUMBER,
 	pnoAsiento IN NUMBER, pidLinea in NUMBER)
@@ -303,12 +306,15 @@ BEGIN
 	IF SQL%NOTFOUND THEN
 		INSERT INTO reserva(noFolio,costo,hora,fecha,noCliente,noAuto,noAsiento)
 			VALUES (pnoFolio,pcosto,phora,pfecha,pnoCliente,pnoAuto,pnoAsiento);
+		DBMS_OUTPUT.PUT_LINE('Usuario: '||pnoCliente||' reservación realizada exitosa mente ');
 	ELSE
 		DBMS_OUTPUT.PUT_LINE('Usuario: '||pnoCliente||' ya tiene reservacion en '||pidLinea||' '||pfecha||phora);	
 	END IF;
 END;
 /
+
 /********** procedimiento de borrado **************************/
+/*   excec deleteCliente(noCliente)     */
 CREATE or REPLACE PROCEDURE deleteCliente(cnoCliente in NUMBER)
 AS
 	tmp NUMBER (4);
@@ -323,3 +329,4 @@ BEGIN
 	END IF;
 END;
 /
+
