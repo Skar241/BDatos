@@ -308,3 +308,18 @@ BEGIN
 	END IF;
 END;
 /
+/********** procedimiento de borrado **************************/
+CREATE or REPLACE PROCEDURE deleteCliente(cnoCliente in NUMBER)
+AS
+	tmp NUMBER (4);
+BEGIN
+	select noCliente INTO tmp FROM cliente
+	WHERE noCliente = cnoCliente;
+	IF SQL%NOTFOUND THEN
+		DBMS_OUTPUT.PUT_LINE(cnoCliente||' no existe en la BD, operacion fallida');
+	ELSE
+		DBMS_OUTPUT.PUT_LINE(cnoCliente||' eliminado, operacion exitosa');
+		DELETE FROM cliente WHERE noCliente = cnoCliente;
+	END IF;
+END;
+/
