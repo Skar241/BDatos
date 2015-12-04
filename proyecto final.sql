@@ -245,7 +245,7 @@ VALUES (1256, 645.45, '08:14','15/Sep/2015',3964,7020,03);
  	v_pilaC IN cliente.pilaC%TYPE,
  	v_apPatCli IN cliente.apPatCli%TYPE,
  	v_apMatCli IN cliente.apMatCli%TYPE)
-IS --tal vez
+AS --tal vez
  	d_noCliente cliente.noCliente%TYPE;
  BEGIN --inicia
  	SELECT noCliente  
