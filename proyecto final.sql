@@ -309,3 +309,23 @@ BEGIN
 END edoAsiento ;
 /
 Disparador creado.
+
+/* Procedimiento que verifique que al momento de hacer una reservación del cliente-asiento, no exista otra del mismo  **
+**  cliente en esa fecha y hora, puede estar en otra línea de autobuses                                                */
+
+CREATE OR REPLACE PROCEDURE addReservacion(pnoFolio IN NUMBER, pcosto IN NUMBER,
+	phora in VARCHAR2, pfecha in DATE, pnoCliente IN NUMBER, pnoAuto IN NUMBER,
+	pnoAsiento IN NUMBER)
+AS
+	tmp NUMBER (4); 
+BEGIN
+	SELECT noCliente INTO tmp FROM reserva
+	WHERE (noCliente = pnoCliente AND fecha = pfecha);
+	IF SQL%NOTFOUND THEN
+		INSERT INTO reserva(noFolio,costo,hora,fecha,noCliente,noAuto,noAsiento)
+			VALUES (pnoFolio,pcosto,phora,pfecha,pnoCliente,pnoAuto,pnoAsiento);
+	ELSE
+		DBMS_OUTPUT.PUT_LINE('Usuario: '||pnoCliente||' ya tiene reservacion en '||' '||pfecha||phora);	
+	END IF;
+END;
+/
