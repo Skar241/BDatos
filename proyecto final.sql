@@ -268,7 +268,8 @@ AFTER
 	INSERT   ON reserva
 	FOR EACH ROW --al ser para cada tupla tendremos el id de esa tupla
 DECLARE
-	pfkautoAsiento reserva.noAuto,noAsiento%TYPE; --referenciamos una FK compuesta
+	pfkautoAsiento reserva.noAuto%TYPE;--listo :3
+	pfkautoAsiento2 reserva.noAsiento%TYPE; --referenciamos una FK compuesta
 BEGIN
 	pfkautoAsiento  = :NEW.noAuto;
 	pfkautoAsiento2 = :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
