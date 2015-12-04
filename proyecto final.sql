@@ -274,13 +274,21 @@ BEGIN
 	pfkautoAsiento  = :NEW.noAuto;
 	pfkautoAsiento2 = :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
 	-- solo actualizamos valor del estatusAsiento
-	
-	--Con esas dos lineas muestra error. 
-	--Dice que New.NoAuto se debe declarar
-	--igual con NEW.noAsiento
-	
+
 	UPDATE  autoAsiento
 	SET  estatusAsiento = 'O'	
 	WHERE  noAuto = pfkautoAsiento AND noAsiento =  pfkautoAsiento2;
 END edoAsiento ;
 /
+
+
+Advertencia: Disparador creado con errores de compilación.
+
+SQL> show errors;
+Errores para TRIGGER EDOASIENTO:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+5/18     PLS-00103: Se ha encontrado el símbolo "=" cuando se esperaba uno
+         de los siguientes:
+         := . ( @ % ;
