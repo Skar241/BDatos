@@ -330,3 +330,28 @@ BEGIN
 END;
 /
 
+/****** Procedimiento de modificación de tabla ***/
+--procedimiento que actualiza tabla autobus
+
+--EXEC cambiaRuta (noAuto,nuevaruta)
+
+ /* --- IMPORTANTE: consideramos que un autobus puede cambiar de ruta pero no de linea ------*/
+
+ CREATE OR REPLACE cambiaRuta (
+ 	v_noAuto autobus.noAuto%TYPE;
+ 	v_ruta autobus.ruta%TYPE;)
+ --AS
+ 	--d_noAuto autobus.noAuto%TYPE;
+ 	--d_ruta autobus.ruta%TYPE;
+ BEGIN
+ 	UPDATE autobus
+ 	SET ruta = v_ruta
+ 	WHERE noAuto = v_noAuto;
+ 	IF SQL%NOTFOUND THEN
+ 		DBMS_OUTPUT.PUT_LINE('Autobus inexistente '|| v_noAuto);
+ 	ELSE 
+ 		DBMS_OUTPUT.PUT_LINE('Ruta modificada '|| v_noAuto|| v_ruta);
+ 	END IF;
+ END;
+ /
+
