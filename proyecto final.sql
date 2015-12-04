@@ -280,6 +280,6 @@ BEGIN
 	
 	UPDATE  autoAsiento
 	SET  estatusAsiento = 'O'	
-	WHERE  noAuto,noAsiento = pfkautoAsiento;
+	WHERE  noAuto = pfkautoAsiento AND noAsiento =  pfkautoAsiento2;
 END edoAsiento ;
 /
