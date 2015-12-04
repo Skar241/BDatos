@@ -248,7 +248,7 @@ VALUES (1256, 645.45, '08:14','15/Sep/2015',3964,7020,03);
 IS --tal vez
  	d_noCliente cliente.noCliente%TYPE;
  BEGIN --inicia
- 	SET SERVEROUTPUT ON; --habilita imprimir en pantalla, no se donde va
+ --	SET SERVEROUTPUT ON; --habilita imprimir en pantalla, ESTA NO VA EN EL PROCEDIMIENTO
  	SELECT noCliente  
  	INTO d_noCliente
  	FROM cliente
