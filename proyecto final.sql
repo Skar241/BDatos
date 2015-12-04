@@ -273,6 +273,11 @@ BEGIN
 	pfkautoAsiento  = :NEW.noAuto;
 	pfkautoAsiento2 = :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
 	-- solo actualizamos valor del estatusAsiento
+	
+	--Con esas dos lineas muestra error. 
+	--Dice que New.NoAuto se debe declarar
+	--igual con NEW.noAsiento
+	
 	UPDATE  autoAsiento
 	SET  estatusAsiento = 'O'	
 	WHERE  noAuto,noAsiento = pfkautoAsiento;
