@@ -238,31 +238,6 @@ VALUES (1256, 645.45, '08:14','15/Sep/2015',3964,7020,03);
 
 
 /**************************************** PRODCEDIMIENTOS ******************************/
-/*Faltan restricciones de borrado*/
-
-
-/* Procedimiento que verifique que al momento de hacer una reservación del cliente-asiento, no exista otra del mismo  **
-**  cliente en esa fecha y hora, puede estar en otra línea de autobuses                                                */
-
-CREATE OR REPLACE PROCEDURE addReservacion(pnoFolio IN NUMBER, pcosto IN NUMBER
-	phora in VARCHAR2, pfecha in DATE, pnoCliente IN NUMBER, pnoAuto IN NUMBER,
-	pnoAsiento IN NUMBER,pidLinea IN NUMBER)
-AS
-BEGIN
-	SELECT idLinea INTO pidLinea 
-	FROM reserva NATURAL JOIN autobus
-	WHERE (noCliente = pnoCliente AND fecha = pfecha AND idLinea = pidLinea);
-	IF SQL%NOTFOUND THEN
-		INSERT INTO reserva(noFolio,costo,hora,fecha,noCliente,noAuto,noAsiento)
-			VALUES (pnoFolio,pcosto,phora,pfecha,pnoCliente,pnoAuto,pnoAsiento,pidLinea);
-	ELSE
-		DBMS_OUTPUT.PUT_LINE('Usuario: '||pnoCliente||' ya tiene reservacion en '||pidLinea||' '||pfecha||phora);	
-	END IF;
-END;
-/
---////////////// PRocedimiento tiene errores  
- -- sobre tabla cliente
---procedimiento que inserta tupla en cliente si esta no existe
 
  CREATE OR REPLACE PROCEDURE  insertaCliente(
  	v_noCliente IN  cliente.noCliente%TYPE,
@@ -314,17 +289,17 @@ Disparador creado.
 
 CREATE OR REPLACE PROCEDURE addReservacion(pnoFolio IN NUMBER, pcosto IN NUMBER,
 	phora in VARCHAR2, pfecha in DATE, pnoCliente IN NUMBER, pnoAuto IN NUMBER,
-	pnoAsiento IN NUMBER)
+	pnoAsiento IN NUMBER, pidLinea in NUMBER)
 AS
 	tmp NUMBER (4); 
 BEGIN
-	SELECT noCliente INTO tmp FROM reserva
-	WHERE (noCliente = pnoCliente AND fecha = pfecha);
+	SELECT noCliente INTO tmp FROM reserva NATURAL JOIN autobus
+	WHERE (noCliente = pnoCliente AND fecha = pfecha AND pidLinea = idLinea);
 	IF SQL%NOTFOUND THEN
 		INSERT INTO reserva(noFolio,costo,hora,fecha,noCliente,noAuto,noAsiento)
 			VALUES (pnoFolio,pcosto,phora,pfecha,pnoCliente,pnoAuto,pnoAsiento);
 	ELSE
-		DBMS_OUTPUT.PUT_LINE('Usuario: '||pnoCliente||' ya tiene reservacion en '||' '||pfecha||phora);	
+		DBMS_OUTPUT.PUT_LINE('Usuario: '||pnoCliente||' ya tiene reservacion en '||pidLinea||' '||pfecha||phora);	
 	END IF;
 END;
 /
