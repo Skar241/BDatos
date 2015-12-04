@@ -295,17 +295,16 @@ END;
 CREATE OR REPLACE TRIGGER edoAsiento
 AFTER
 	INSERT   ON reserva
-	FOR EACH ROW --al ser para cada tupla tendremos el id de esa tupla
+	FOR EACH ROW --habra una modificacion por cada tupla modificada
 DECLARE
-	pfkautoAsiento reserva.noAuto%TYPE;--listo :3
+	pfkautoAsiento reserva.noAuto%TYPE;
 	pfkautoAsiento2 reserva.noAsiento%TYPE; --referenciamos una FK compuesta
 BEGIN
-	pfkautoAsiento  := :NEW.noAuto;-- a ver si funciona poner " := "
-	pfkautoAsiento2 := :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
+	pfkautoAsiento  := :NEW.noAuto;
+	pfkautoAsiento2 := :new.noAsiento;-- recibe datos modificados en tabla reserva
 	-- solo actualizamos valor del estatusAsiento
-
 	UPDATE  autoAsiento
-	SET  estatusAsiento = 'O'	
+	SET  estatusAsiento = 'O' 	
 	WHERE  noAuto = pfkautoAsiento AND noAsiento =  pfkautoAsiento2;
 END edoAsiento ;
 /
