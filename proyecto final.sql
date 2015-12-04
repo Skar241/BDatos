@@ -270,8 +270,7 @@ END;
  	v_pilaC IN cliente.pilaC%TYPE,
  	v_apPatCli IN cliente.apPatCli%TYPE,
  	v_apMatCli IN cliente.apMatCli%TYPE)
-
- AS 
+IS --tal vez
  	d_noCliente cliente.noCliente%TYPE;
  BEGIN --inicia
  	SET SERVEROUTPUT ON; --habilita imprimir en pantalla, no se donde va
