@@ -270,6 +270,8 @@ AFTER
 DECLARE
 	pfkautoAsiento reserva.noAuto,noAsiento%TYPE; --referenciamos una FK compuesta
 BEGIN
+	pfkautoAsiento  = :NEW.noAuto;
+	pfkautoAsiento2 = :new.noAsiento;--pruebas para recibir datos modificados en tabla reserva
 	-- solo actualizamos valor del estatusAsiento
 	UPDATE  autoAsiento
 	SET  estatusAsiento = 'O'	
